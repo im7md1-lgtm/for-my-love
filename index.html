@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Angel</title>
+    <title>A Love That Blooms</title>
     <style>
         body {
             margin: 0;
-            background-color: #05050a;
+            background-color: #030308; /* خلفية سوداء فخمة */
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -15,100 +15,123 @@
             align-items: center;
             overflow: hidden;
             font-family: 'Segoe UI', sans-serif;
+            color: #fff;
         }
 
-        .flower-container {
+        .bouquet-container {
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 50px;
         }
 
-        /* رأس الوردة - مشدودة لفوق وصغيرة */
-        .rose-bud {
+        /* باقة الورد - مخفية في البداية وتظهر بنعومة فائقة */
+        .bouquet {
             position: relative;
-            width: 60px; /* حجم أصغر وأرشق */
-            height: 80px;
-            opacity: 0;
-            animation: fastBloom 0.7s ease-out forwards;
-            animation-delay: 0.4s;
-            z-index: 10;
+            width: 350px; /* حجم باقة فخم */
+            height: auto;
+            opacity: 0; /* مخفية تماماً */
+            filter: blur(20px); /* تأثير ضبابي قوي للبداية السلسة */
+            transform: scale(0.8) translateY(30px); /* صغرتها وحركتها لتحت */
+            
+            /* الأنميشن السلس: يظهر بنعومة (2s) */
+            animation: superSmoothBloom 2s forwards cubic-bezier(0.19, 1, 0.22, 1);
+            animation-delay: 1.5s; /* يبدأ بعد ظهور الغصن والأوراق */
         }
 
-        .petal {
+        /* تفاصيل الغصن والأوراق - تظهر أولاً بنعومة */
+        .stem-details {
             position: absolute;
-            background: linear-gradient(to top, #4a0000, #8b0000, #b30000);
-            border-radius: 50% 50% 20% 20%;
-            transform-origin: bottom center;
-            border: 1px solid rgba(0,0,0,0.2);
-        }
-
-        /* البتلات متداخلة ومرفوعة لفوق (شكل الكأس) */
-        .p1 { width: 100%; height: 100%; transform: rotate(0deg); z-index: 1; }
-        .p2 { width: 90%; height: 95%; left: 5%; transform: rotate(20deg); z-index: 2; }
-        .p3 { width: 90%; height: 95%; left: 5%; transform: rotate(-20deg); z-index: 2; }
-        .p4 { width: 80%; height: 90%; left: 10%; transform: rotate(10deg); background: #660000; z-index: 3; }
-        .p5 { width: 70%; height: 85%; left: 15%; top: 5%; background: #4a0000; border-radius: 50%; z-index: 4; }
-
-        .stem {
-            width: 5px;
-            height: 150px;
-            background: linear-gradient(#1a4d2e, #0a2d1a);
-            margin-top: -5px;
+            top: 150px; /* موقع الأوراق على الغصن */
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
             opacity: 0;
-            animation: growIn 0.5s ease-out forwards;
+            animation: growIn 1.5s forwards ease-out;
+            animation-delay: 0.5s; /* تظهر بعد ظهور الغصن */
         }
 
         .leaf {
-            position: absolute;
-            width: 30px;
-            height: 18px;
-            background: #1a4d2e;
+            width: 60px;
+            height: 35px;
+            background: linear-gradient(#1a4d2e, #2ecc71);
             border-radius: 50% 0 50% 0;
-            opacity: 0;
-            animation: growIn 0.4s ease-out forwards;
-            animation-delay: 0.8s;
+            filter: blur(5px);
+            animation: leafSmoothIn 1s forwards ease-out;
         }
-        .l1 { top: 40px; left: -25px; transform: rotate(-20deg); }
-        .l2 { top: 80px; right: -25px; transform: rotate(140deg); }
+        .leaf.left { transform: rotate(-30deg); animation-delay: 0.8s; }
+        .leaf.right { transform: rotate(150deg); animation-delay: 1s; }
 
+        /* تدرج الأوراق على الغصن - توزيع شوي مو مرة */
+        .leaf.l3 { top: 220px; left: -100px; transform: rotate(-20deg); animation-delay: 1.2s; }
+        .leaf.l4 { top: 260px; right: -100px; transform: rotate(140deg); animation-delay: 1.4s; }
+
+        /* النص - حجم أكبر كما طلبت */
         .message {
-            margin-top: 30px;
             color: #ff4d6d;
-            font-size: 2.5rem;
+            text-align: center;
+            font-size: 3.5rem; /* حجم أكبر */
             font-weight: 900;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 0 25px rgba(255, 77, 109, 0.8);
             opacity: 0;
-            animation: growIn 0.6s ease-out forwards;
-            animation-delay: 1.2s;
-            direction: rtl;
+            animation: growIn 1.5s forwards ease-out;
+            animation-delay: 3s; /* يظهر بعد ما تكتمل الباقة */
+            direction: rtl; /* يحافظ على اتجاه اللغة العربية */
+            padding: 0 20px;
+        }
+
+        /* قلوب متطايرة - تظهر بنعومة */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 22px;
+            animation: float 7s infinite linear;
+            opacity: 0;
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+        }
+
+        @keyframes superSmoothBloom {
+            0% { opacity: 0; filter: blur(20px); transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
+        }
+
+        @keyframes leafSmoothIn {
+            0% { opacity: 0; filter: blur(5px); transform: scale(0.3) rotate(0deg); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1) rotate(0); }
         }
 
         @keyframes growIn {
-            from { opacity: 0; transform: scale(0); }
-            to { opacity: 1; transform: scale(1); }
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
 
-        @keyframes fastBloom {
-            from { opacity: 0; transform: translateY(20px) scale(0.7); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-800px) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="flower-container">
-        <div class="rose-bud">
-            <div class="petal p1"></div>
-            <div class="petal p2"></div>
-            <div class="petal p3"></div>
-            <div class="petal p4"></div>
-            <div class="petal p5"></div>
+    <div class="bouquet-container">
+        <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/rose-in-deep-crimson-vivi-marina-photography.jpg" alt="Romantic Rose Bouquet" class="bouquet">
+        
+        <div class="stem-details">
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
         </div>
-        <div class="stem"></div>
-        <div class="leaf l1"></div>
-        <div class="leaf l2"></div>
+        <div class="leaf l3"></div>
+        <div class="leaf l4"></div>
     </div>
 
-    <div class="message">احبك ياملاكي 🩷</div>
+    <div class="message">
+        احبك ياملاكي 🩷
+    </div>
+
+    <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+    <div class="heart" style="left: 85%; animation-delay: 2.5s;">🩷</div>
+    <div class="heart" style="left: 30%; animation-delay: 4s;">❤️</div>
+    <div class="heart" style="left: 60%; animation-delay: 6s;">🩷</div>
 </body>
 </html>
