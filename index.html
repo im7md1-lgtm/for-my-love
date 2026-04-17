@@ -1,128 +1,156 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>باقة ورد</title>
-<style>
-body {
-  background: #0f1a2b;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  font-family: sans-serif;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bouquet of 6 Blossoms</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #030308;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+        }
 
-/* الحاوية */
-.bouquet {
-  position: relative;
-  width: 200px;
-  height: 350px;
-}
+        .bouquet-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 60px; /* مسافة كافية للكلام تحت الباقة */
+        }
 
-/* الساق */
-.stem {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  width: 6px;
-  height: 200px;
-  background: #2ecc71;
-  transform: translateX(-50%) scaleY(0);
-  transform-origin: bottom;
-  animation: growStem 1s ease forwards;
-}
+        /* الباقة المرسومة - تظهر بنعومة وسرعة مناسبة */
+        .bouquet {
+            position: relative;
+            width: 380px; /* حجم الباقة */
+            height: auto;
+            opacity: 0;
+            filter: blur(15px);
+            transform: scale(0.8) translateY(20px);
+            
+            /* الأنميشن: يظهر بنعومة (1.5s) */
+            animation: bouquetBloom 1.5s forwards cubic-bezier(0.19, 1, 0.22, 1);
+            animation-delay: 1s; /* يبدأ بعد ظهور الورق الوردي */
+            z-index: 10;
+        }
 
-/* الأوراق */
-.leaf {
-  position: absolute;
-  width: 40px;
-  height: 20px;
-  background: #27ae60;
-  border-radius: 20px;
-  opacity: 0;
-}
+        /* ورق التغليف الوردي - يظهر أولاً */
+        .pink-wrap {
+            position: absolute;
+            bottom: -30px;
+            width: 300px;
+            height: 350px;
+            background: linear-gradient(135deg, #ffc0cb, #f78da7);
+            border-radius: 50% 50% 10% 10% / 100% 100% 0 0;
+            opacity: 0;
+            animation: growIn 1s forwards ease-out;
+            animation-delay: 0.5s;
+            z-index: 5;
+            box-shadow: 0 10px 30px rgba(247, 141, 167, 0.5);
+        }
 
-.leaf.left {
-  left: 50%;
-  bottom: 130px;
-  transform: rotate(-30deg);
-  animation: fadeIn 0.8s ease forwards 1s;
-}
+        /* تفاصيل الأوراق الخضراء - تتوزع على الأغصان تحت */
+        .stem-details {
+            position: absolute;
+            bottom: 50px;
+            width: 80%;
+            display: flex;
+            justify-content: space-around;
+            opacity: 0;
+            animation: growIn 1.2s forwards ease-out;
+            animation-delay: 1.2s;
+            z-index: 6;
+        }
 
-.leaf.right {
-  left: 50%;
-  bottom: 160px;
-  transform: rotate(30deg);
-  animation: fadeIn 0.8s ease forwards 1.2s;
-}
+        .leaf {
+            width: 60px;
+            height: 35px;
+            background: linear-gradient(#1a4d2e, #2ecc71);
+            border-radius: 50% 0 50% 0;
+            filter: blur(5px);
+            animation: leafSmoothIn 0.8s forwards ease-out;
+        }
+        .leaf.l1 { transform: rotate(-30deg); animation-delay: 1.4s; }
+        .leaf.l2 { transform: rotate(150deg); animation-delay: 1.6s; }
 
-/* الورد */
-.flower {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background: pink;
-  border-radius: 50%;
-  opacity: 0;
-  transform: scale(0);
-  animation: bloom 0.8s ease forwards;
-}
+        /* الأوراق المتدرجة - توزيع شوي مو مرة */
+        .leaf.l3 { bottom: 120px; left: -100px; transform: rotate(-20deg); animation-delay: 1.8s; }
+        .leaf.l4 { bottom: 160px; right: -100px; transform: rotate(140deg); animation-delay: 2s; }
 
-/* توزيع 6 وردات */
-.f1 { top: 0; left: 80px; animation-delay: 1.5s; }
-.f2 { top: 30px; left: 40px; animation-delay: 1.7s; }
-.f3 { top: 30px; left: 120px; animation-delay: 1.9s; }
-.f4 { top: 60px; left: 70px; animation-delay: 2.1s; }
-.f5 { top: 60px; left: 110px; animation-delay: 2.3s; }
-.f6 { top: 60px; left: 30px; animation-delay: 2.5s; }
+        /* النص - حجم أكبر كما طلبت */
+        .message {
+            color: #ff4d6d;
+            text-align: center;
+            font-size: 3.5rem; /* حجم أكبر */
+            font-weight: 900;
+            text-shadow: 0 0 25px rgba(255, 77, 109, 0.8);
+            opacity: 0;
+            animation: growIn 1.5s forwards ease-out;
+            animation-delay: 3s; /* يظهر بعد ما تكتمل الباقة */
+            direction: rtl; /* يحافظ على اتجاه اللغة العربية */
+            padding: 0 20px;
+        }
 
-/* النص */
-.text {
-  margin-top: 20px;
-  font-size: 24px;
-  color: pink;
-  opacity: 0;
-  animation: fadeIn 1s ease forwards 3s;
-}
+        /* قلوب متطايرة - تظهر بنعومة */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 22px;
+            animation: float 7s infinite linear;
+            opacity: 0;
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+        }
 
-/* أنيميشن */
-@keyframes growStem {
-  to { transform: translateX(-50%) scaleY(1); }
-}
+        @keyframes bouquetBloom {
+            0% { opacity: 0; filter: blur(15px); transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
+        }
 
-@keyframes bloom {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+        @keyframes leafSmoothIn {
+            0% { opacity: 0; filter: blur(5px); transform: scale(0.3) rotate(0deg); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1) rotate(0); }
+        }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-</style>
+        @keyframes growIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-800px) rotate(360deg); opacity: 0; }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="bouquet-container">
+        <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/rose-in-deep-crimson-vivi-marina-photography.jpg" alt="A Bouquet of 6 Drawn Crimson Roses" class="bouquet">
+        
+        <div class="pink-wrap"></div>
+        
+        <div class="stem-details">
+            <div class="leaf l1"></div>
+            <div class="leaf l2"></div>
+        </div>
+        <div class="leaf l3"></div>
+        <div class="leaf l4"></div>
+    </div>
 
-<div class="bouquet">
-  <div class="stem"></div>
+    <div class="message">
+        احبك ياملاكي 🩷
+    </div>
 
-  <div class="leaf left"></div>
-  <div class="leaf right"></div>
-
-  <div class="flower f1"></div>
-  <div class="flower f2"></div>
-  <div class="flower f3"></div>
-  <div class="flower f4"></div>
-  <div class="flower f5"></div>
-  <div class="flower f6"></div>
-</div>
-
-<div class="text">احبك ياملاكي🩷</div>
-
+    <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+    <div class="heart" style="left: 85%; animation-delay: 2.5s;">🩷</div>
+    <div class="heart" style="left: 30%; animation-delay: 4s;">❤️</div>
+    <div class="heart" style="left: 60%; animation-delay: 6s;">🩷</div>
 </body>
 </html>
