@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Love That Blooms</title>
+    <title>A Bouquet of 6 Blossoms</title>
     <style>
         body {
             margin: 0;
-            background-color: #030308; /* خلفية سوداء فخمة */
+            background-color: #030308;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -23,33 +23,50 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px; /* مسافة كافية للكلام تحت الباقة */
         }
 
-        /* باقة الورد - مخفية في البداية وتظهر بنعومة فائقة */
+        /* الباقة - تظهر بنعومة وسرعة مناسبة */
         .bouquet {
             position: relative;
-            width: 350px; /* حجم باقة فخم */
+            width: 380px; /* حجم الباقة */
             height: auto;
-            opacity: 0; /* مخفية تماماً */
-            filter: blur(20px); /* تأثير ضبابي قوي للبداية السلسة */
-            transform: scale(0.8) translateY(30px); /* صغرتها وحركتها لتحت */
+            opacity: 0;
+            filter: blur(15px);
+            transform: scale(0.8) translateY(20px);
             
-            /* الأنميشن السلس: يظهر بنعومة (2s) */
-            animation: superSmoothBloom 2s forwards cubic-bezier(0.19, 1, 0.22, 1);
-            animation-delay: 1.5s; /* يبدأ بعد ظهور الغصن والأوراق */
+            /* الأنميشن: يظهر بنعومة (1.5s) */
+            animation: bouquetBloom 1.5s forwards cubic-bezier(0.19, 1, 0.22, 1);
+            animation-delay: 1s; /* يبدأ بعد ظهور الورق الوردي */
+            z-index: 10;
         }
 
-        /* تفاصيل الغصن والأوراق - تظهر أولاً بنعومة */
+        /* ورق التغليف الوردي - يظهر أولاً */
+        .pink-wrap {
+            position: absolute;
+            bottom: -30px;
+            width: 300px;
+            height: 350px;
+            background: linear-gradient(135deg, #ffc0cb, #f78da7);
+            border-radius: 50% 50% 10% 10% / 100% 100% 0 0;
+            opacity: 0;
+            animation: growIn 1s forwards ease-out;
+            animation-delay: 0.5s;
+            z-index: 5;
+            box-shadow: 0 10px 30px rgba(247, 141, 167, 0.5);
+        }
+
+        /* تفاصيل الأوراق الخضراء - تتوزع على الأغصان تحت */
         .stem-details {
             position: absolute;
-            top: 150px; /* موقع الأوراق على الغصن */
-            width: 100%;
+            bottom: 50px;
+            width: 80%;
             display: flex;
             justify-content: space-around;
             opacity: 0;
-            animation: growIn 1.5s forwards ease-out;
-            animation-delay: 0.5s; /* تظهر بعد ظهور الغصن */
+            animation: growIn 1.2s forwards ease-out;
+            animation-delay: 1.2s;
+            z-index: 6;
         }
 
         .leaf {
@@ -58,14 +75,14 @@
             background: linear-gradient(#1a4d2e, #2ecc71);
             border-radius: 50% 0 50% 0;
             filter: blur(5px);
-            animation: leafSmoothIn 1s forwards ease-out;
+            animation: leafSmoothIn 0.8s forwards ease-out;
         }
-        .leaf.left { transform: rotate(-30deg); animation-delay: 0.8s; }
-        .leaf.right { transform: rotate(150deg); animation-delay: 1s; }
+        .leaf.l1 { transform: rotate(-30deg); animation-delay: 1.4s; }
+        .leaf.l2 { transform: rotate(150deg); animation-delay: 1.6s; }
 
-        /* تدرج الأوراق على الغصن - توزيع شوي مو مرة */
-        .leaf.l3 { top: 220px; left: -100px; transform: rotate(-20deg); animation-delay: 1.2s; }
-        .leaf.l4 { top: 260px; right: -100px; transform: rotate(140deg); animation-delay: 1.4s; }
+        /* الأوراق المتدرجة - توزيع شوي مو مرة */
+        .leaf.l3 { bottom: 120px; left: -100px; transform: rotate(-20deg); animation-delay: 1.8s; }
+        .leaf.l4 { bottom: 160px; right: -100px; transform: rotate(140deg); animation-delay: 2s; }
 
         /* النص - حجم أكبر كما طلبت */
         .message {
@@ -91,8 +108,8 @@
             text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
         }
 
-        @keyframes superSmoothBloom {
-            0% { opacity: 0; filter: blur(20px); transform: scale(0.8) translateY(30px); }
+        @keyframes bouquetBloom {
+            0% { opacity: 0; filter: blur(15px); transform: scale(0.8) translateY(20px); }
             100% { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
         }
 
@@ -102,7 +119,7 @@
         }
 
         @keyframes growIn {
-            0% { opacity: 0; transform: scale(0.8) translateY(20px); filter: blur(10px); }
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); filter: blur(10px); }
             100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
 
@@ -115,11 +132,13 @@
 </head>
 <body>
     <div class="bouquet-container">
-        <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/rose-in-deep-crimson-vivi-marina-photography.jpg" alt="Romantic Rose Bouquet" class="bouquet">
+        <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/rose-in-deep-crimson-vivi-marina-photography.jpg" alt="A Bouquet of 6 Crimson Roses" class="bouquet">
+        
+        <div class="pink-wrap"></div>
         
         <div class="stem-details">
-            <div class="leaf left"></div>
-            <div class="leaf right"></div>
+            <div class="leaf l1"></div>
+            <div class="leaf l2"></div>
         </div>
         <div class="leaf l3"></div>
         <div class="leaf l4"></div>
