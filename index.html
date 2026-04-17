@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            background-color: #030308;
+            background-color: #030308; /* خلفية سوداء فخمة */
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -22,109 +22,85 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
-        /* Stem - Appears First */
-        .stem {
-            position: relative;
-            width: 8px;
-            height: 220px;
-            background: linear-gradient(#1a4d2e, #0a2d1a);
-            border-radius: 10px;
+        /* صورة الوردة طبق الأصل */
+        .rose-image {
+            width: 300px; /* حجم واقعي وفخم */
+            height: auto;
             opacity: 0;
-            animation: growIn 2.5s forwards;
+            filter: blur(10px) drop-shadow(0 0 15px rgba(139, 0, 0, 0.7)); /* تأثير ضبابي بنعومة */
+            
+            /* الأنميشن السريع: يظهر بسرعة (1s) */
+            animation: fastShow 1s forwards cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* Leaves - Appear Second */
+        /* تفاصيل الأوراق - تظهر ثانياً بسرعة */
         .leaf {
             position: absolute;
-            width: 45px;
-            height: 25px;
+            width: 50px;
+            height: 30px;
             background: linear-gradient(#1a4d2e, #2ecc71);
             border-radius: 50% 0 50% 0;
             opacity: 0;
-            animation: growIn 2s forwards;
-            animation-delay: 1.8s;
+            animation: leafFastIn 0.5s forwards ease-out;
+            animation-delay: 1.2s; /* تظهر بعد تفتح الوردة */
         }
-        .l1 { top: 60px; left: -40px; transform: rotate(-30deg); }
-        .l2 { top: 120px; right: -40px; transform: rotate(150deg); }
+        .l1 { top: 70px; left: -45px; transform: rotate(-30deg); }
+        .l2 { top: 140px; right: -45px; transform: rotate(150deg); }
 
-        /* Dark Crimson Rose Head - Appears Last & Smoothly */
-        .rose-head {
-            position: absolute;
-            top: -85px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 120px;
-            opacity: 0;
-            animation: bloomIn 3.5s forwards;
-            animation-delay: 3.5s;
-        }
-
-        .rose-petals {
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, #660000 10%, #4a0000 70%, #2a0000 100%);
-            border-radius: 50%;
-            box-shadow: inset 0 0 40px #000, 0 0 25px rgba(139, 0, 0, 0.6);
-            animation: sway 5s infinite ease-in-out;
-        }
-
-        /* Large Romantic Message */
+        /* النص - حجم أكبر وفخامة */
         .message {
             color: #ff4d6d;
             text-align: center;
-            font-size: 3.5rem; /* Large size as requested */
-            font-weight: 900;
-            text-shadow: 0 0 25px rgba(255, 77, 109, 0.8);
+            font-size: 3rem; /* حجم أكبر */
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(255, 77, 109, 0.7);
             opacity: 0;
-            animation: growIn 3s forwards;
-            animation-delay: 5.5s;
-            direction: rtl; /* Keeps your Arabic text aligned correctly */
+            animation: growIn 1s forwards ease-out;
+            animation-delay: 1.7s; /* يظهر بعد ما تكتمل الوردة */
+            direction: rtl; /* يحافظ على اتجاه اللغة العربية */
             padding: 0 20px;
         }
 
+        /* قلوب عشوائية - تظهر بسرعة */
         .heart {
             position: absolute;
             color: #ff4d6d;
-            font-size: 22px;
-            animation: float 8s infinite linear;
+            font-size: 20px;
+            animation: float 5s infinite linear;
             opacity: 0;
         }
 
-        @keyframes growIn {
-            from { opacity: 0; transform: scale(0.8) translateY(30px); filter: blur(10px); }
+        @keyframes fastShow {
+            from { opacity: 0; transform: scale(0.5) translateY(20px); filter: blur(20px); }
             to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
 
-        @keyframes bloomIn {
-            from { opacity: 0; transform: translateX(-50%) scale(0.5); filter: blur(15px); }
-            to { opacity: 1; transform: translateX(-50%) scale(1); filter: blur(0); }
-        }
-
-        @keyframes sway {
-            0%, 100% { transform: rotate(-4deg); }
-            50% { transform: rotate(4deg); }
+        @keyframes leafFastIn {
+            from { opacity: 0; transform: scale(0.3) rotate(0deg); }
+            to { opacity: 1; transform: scale(1) rotate(0); }
         }
 
         @keyframes float {
             0% { transform: translateY(0); opacity: 0; }
             20% { opacity: 0.8; }
-            100% { transform: translateY(-1000px) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(-800px) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes growIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
     <div class="flower-container">
-        <div class="stem">
-            <div class="leaf l1"></div>
-            <div class="leaf l2"></div>
-            <div class="rose-head">
-                <div class="rose-petals"></div>
-            </div>
-        </div>
+        <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/rose-in-deep-crimson-vivi-marina-photography.jpg" alt="Deep Crimson Rose" class="rose-image">
+        
+        <div class="leaf l1"></div>
+        <div class="leaf l2"></div>
     </div>
 
     <div class="message">
@@ -132,8 +108,7 @@
     </div>
 
     <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
-    <div class="heart" style="left: 85%; animation-delay: 2.5s;">🩷</div>
-    <div class="heart" style="left: 30%; animation-delay: 4s;">❤️</div>
-    <div class="heart" style="left: 60%; animation-delay: 6s;">🩷</div>
+    <div class="heart" style="left: 85%; animation-delay: 1s;">🩷</div>
+    <div class="heart" style="left: 30%; animation-delay: 2s;">❤️</div>
 </body>
 </html>
