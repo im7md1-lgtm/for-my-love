@@ -7,14 +7,14 @@
     <style>
         body {
             margin: 0;
-            background-color: #030308; /* خلفية سوداء فخمة */
+            background-color: #030308;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         .flower-container {
@@ -22,93 +22,94 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
-        /* صورة الوردة طبق الأصل */
-        .rose-image {
-            width: 300px; /* حجم واقعي وفخم */
-            height: auto;
+        /* رأس الوردة الجورية - رسم برمجي كامل */
+        .rose-head {
+            position: relative;
+            width: 120px;
+            height: 120px;
             opacity: 0;
-            filter: blur(10px) drop-shadow(0 0 15px rgba(139, 0, 0, 0.7)); /* تأثير ضبابي بنعومة */
-            
-            /* الأنميشن السريع: يظهر بسرعة (1s) */
-            animation: fastShow 1s forwards cubic-bezier(0.19, 1, 0.22, 1);
+            animation: bloom 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards;
+            animation-delay: 0.5s;
+            filter: drop-shadow(0 0 25px #ff0000);
         }
 
-        /* تفاصيل الأوراق - تظهر ثانياً بسرعة */
+        .petal {
+            position: absolute;
+            background: linear-gradient(#8b0000, #4b0000);
+            border-radius: 50% 50% 10% 10%;
+            transform-origin: bottom center;
+        }
+
+        /* ترتيب البتلات لتعطي شكل الصورة بالضبط */
+        .p1 { width: 100%; height: 100%; transform: rotate(0deg); opacity: 0.8; }
+        .p2 { width: 100%; height: 100%; transform: rotate(45deg); opacity: 0.8; }
+        .p3 { width: 100%; height: 100%; transform: rotate(90deg); opacity: 0.8; }
+        .p4 { width: 100%; height: 100%; transform: rotate(135deg); opacity: 0.8; }
+        .p5 { width: 80%; height: 80%; left: 10%; top: 10%; transform: rotate(22deg); background: #a00000; z-index: 2; }
+        .p6 { width: 60%; height: 60%; left: 20%; top: 20%; transform: rotate(67deg); background: #ff003c; z-index: 3; }
+
+        .stem {
+            width: 8px;
+            height: 180px;
+            background: linear-gradient(#1a4d2e, #0a2d1a);
+            border-radius: 10px;
+            opacity: 0;
+            animation: grow 0.6s ease-out forwards;
+        }
+
         .leaf {
             position: absolute;
-            width: 50px;
-            height: 30px;
-            background: linear-gradient(#1a4d2e, #2ecc71);
+            width: 40px;
+            height: 25px;
+            background: #1a4d2e;
             border-radius: 50% 0 50% 0;
             opacity: 0;
-            animation: leafFastIn 0.5s forwards ease-out;
-            animation-delay: 1.2s; /* تظهر بعد تفتح الوردة */
+            animation: grow 0.5s ease-out forwards;
+            animation-delay: 1s;
         }
-        .l1 { top: 70px; left: -45px; transform: rotate(-30deg); }
-        .l2 { top: 140px; right: -45px; transform: rotate(150deg); }
+        .l1 { top: 60px; left: -35px; transform: rotate(-30deg); }
+        .l2 { top: 110px; right: -35px; transform: rotate(150deg); }
 
-        /* النص - حجم أكبر وفخامة */
         .message {
             color: #ff4d6d;
-            text-align: center;
-            font-size: 3rem; /* حجم أكبر */
-            font-weight: 800;
-            text-shadow: 0 0 20px rgba(255, 77, 109, 0.7);
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-shadow: 0 0 30px rgba(255, 77, 109, 0.9);
             opacity: 0;
-            animation: growIn 1s forwards ease-out;
-            animation-delay: 1.7s; /* يظهر بعد ما تكتمل الوردة */
-            direction: rtl; /* يحافظ على اتجاه اللغة العربية */
-            padding: 0 20px;
+            animation: grow 0.8s ease-out forwards;
+            animation-delay: 1.3s;
+            direction: rtl;
         }
 
-        /* قلوب عشوائية - تظهر بسرعة */
-        .heart {
-            position: absolute;
-            color: #ff4d6d;
-            font-size: 20px;
-            animation: float 5s infinite linear;
-            opacity: 0;
-        }
-
-        @keyframes fastShow {
-            from { opacity: 0; transform: scale(0.5) translateY(20px); filter: blur(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-        }
-
-        @keyframes leafFastIn {
-            from { opacity: 0; transform: scale(0.3) rotate(0deg); }
-            to { opacity: 1; transform: scale(1) rotate(0); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-800px) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes growIn {
-            from { opacity: 0; transform: scale(0.8); }
+        @keyframes grow {
+            from { opacity: 0; transform: scale(0); }
             to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes bloom {
+            from { opacity: 0; transform: scale(0) rotate(-45deg); }
+            to { opacity: 1; transform: scale(1.2) rotate(0); }
         }
     </style>
 </head>
 <body>
     <div class="flower-container">
-        <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/rose-in-deep-crimson-vivi-marina-photography.jpg" alt="Deep Crimson Rose" class="rose-image">
-        
+        <div class="rose-head">
+            <div class="petal p1"></div>
+            <div class="petal p2"></div>
+            <div class="petal p3"></div>
+            <div class="petal p4"></div>
+            <div class="petal p5"></div>
+            <div class="petal p6"></div>
+        </div>
+        <div class="stem"></div>
         <div class="leaf l1"></div>
         <div class="leaf l2"></div>
     </div>
 
-    <div class="message">
-        احبك ياملاكي 🩷
-    </div>
-
-    <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
-    <div class="heart" style="left: 85%; animation-delay: 1s;">🩷</div>
-    <div class="heart" style="left: 30%; animation-delay: 2s;">❤️</div>
+    <div class="message">احبك ياملاكي 🩷</div>
 </body>
 </html>
